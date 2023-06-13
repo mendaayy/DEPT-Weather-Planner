@@ -1,15 +1,29 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from '../styles/page.module.css';
 
 export default function Home() {
+  const [weatherInfo, setWeatherInfo] = useState(null);
   const [showMore, setShowMore] = useState(false);
 
   const handleToggle = () => {
     setShowMore(!showMore);
   };
+  
+  useEffect(() => {
+    fetch('http://localhost:8004')
+      .then((response) => response.json())
+      .then((data) => {
+        setWeatherInfo(data);
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching weather data:', error);
+      });
+  }, []);
+  
 
   return (
     <main className={styles.main}>
@@ -53,13 +67,17 @@ export default function Home() {
 
         <div className={styles.column}>
           <div className={styles.weatherInfo}>
-            <h2>
-              25˚
-            </h2>
-            <div className={styles.weatherDesc}>
-              <p>It's 25°C here which is extremely cold for the Netherlands.</p>
-              <p>Very freezing, unusual even for the Netherlands. Stay warm indoors!.</p>
-            </div>
+            {weatherInfo ? (
+              <>
+                <h2>{weatherInfo.temperature.temp}&#8451;</h2>
+                <div className={styles.weatherDesc}>
+                  <p>{weatherInfo.weatherInfo[0].title}</p>
+                  <p>{weatherInfo.weatherInfo[0].description}</p>
+                </div>
+              </>
+            ) : (
+              <p>Loading weather information...</p>
+            )}
           </div>
 
           <div className={styles.activity}>

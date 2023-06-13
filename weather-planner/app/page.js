@@ -1,42 +1,20 @@
 import Image from 'next/image'
-import styles from './page.module.css'
+import styles from '../styles/page.module.css'
 
 export default function Home() {
   return (
     <main className={styles.main}>
       <div className={styles.description}>
         <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
+          <Image
+              src="/dept.svg"
+              alt="DEPT Logo"
+              className={styles.deptLogo}
               width={100}
               height={24}
               priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+          />
+        </p>
       </div>
 
       <div className={styles.grid}>
@@ -47,9 +25,17 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           <h2>
-            Docs <span>-&gt;</span>
+            DEPT<span>&#9415;</span> weather planner
           </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
+          <p>Picture this: an application that doesn't just tell you the weather, but also helps you plan your activities around it. 
+            Imagine knowing exactly the perfect day to plan that hike, or when to avoid the outdoor concert due to an unexpected shower. 
+            That's exactly what the Dept Weather Planner offers you.
+
+            Built with cutting-edge technologies, our weather planner brings you accurate, real-time weather data with a slick and user-friendly 
+            interface. But it's not just a weather app; it's an intuitive daily planner that syncs with the weather. With a range of activities to 
+            choose from, it suggests the best options based on current and forecasted weather conditions. 
+
+            Read less</p>
         </a>
 
         <a
@@ -59,35 +45,9 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           <h2>
-            Learn <span>-&gt;</span>
+            Learn 
           </h2>
           <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
         </a>
       </div>
     </main>

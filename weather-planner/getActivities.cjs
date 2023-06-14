@@ -3,7 +3,7 @@ const fetch = require('isomorphic-fetch');
 const cors = require('cors');
 
 const app = express();
-const port = 8010;
+const port = 6010;
 
 // Enable CORS for all routes
 app.use(cors());

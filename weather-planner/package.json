@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev & node getWeather.cjs & node getActivities.cjs",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "getWeather": "node getWeather.cjs",
+    "getActivities": "node getActivities.cjs",
+    "prestart": "npm run getWeather & npm run getActivities"
   },
   "dependencies": {
     "cors": "^2.8.5",

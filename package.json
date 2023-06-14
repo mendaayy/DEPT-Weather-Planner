@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node getWeather.cjs & node getActivities.cjs & next dev",
-    "build": "next build && node getWeather.cjs && node getActivities.cjs",
+    "dev": "next dev && node getWeather.cjs && node getActivities.cjs",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },

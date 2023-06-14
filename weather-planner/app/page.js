@@ -3,27 +3,107 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import styles from '../styles/page.module.css';
+import Link from 'next/link';
 
 export default function Home() {
   const [weatherInfo, setWeatherInfo] = useState(null);
   const [showMore, setShowMore] = useState(false);
+  const [filteredActivities, setFilteredActivities] = useState([]);
+  const [unavailableActivities, setUnavailableActivities] = useState([]);
 
   const handleToggle = () => {
     setShowMore(!showMore);
   };
   
+  // Fetch current weather data and activities
   useEffect(() => {
-    fetch('http://localhost:8004')
+    fetch('http://localhost:8005')
       .then((response) => response.json())
-      .then((data) => {
-        setWeatherInfo(data);
-        console.log(data);
+      .then((weatherData) => {
+        setWeatherInfo(weatherData);
+
+        // Fetch activities data
+        fetch('http://localhost:8010')
+          .then((response) => response.json())
+          .then((activitiesData) => {
+            console.log(activitiesData);
+
+            if (weatherData && weatherData.temperature) {
+              const { temp } = weatherData.temperature;
+              const celsius = getTemperatureInCelsius(temp);
+
+              // Filter activities based on temperature
+              const filteredActivities = activitiesData.activities.filter((activity) => {
+                const { minTemp, maxTemp } = activity;
+                if (minTemp === null && maxTemp === null) {
+                  return true; // Temperature doesn't matter
+                }
+                return celsius >= minTemp && celsius <= maxTemp;
+              });
+
+              console.log("Could do", filteredActivities);
+              setFilteredActivities(filteredActivities);
+
+              const unavailableActivities = activitiesData.activities.filter((activity) => {
+                const { minTemp, maxTemp } = activity;
+                if (minTemp === null && maxTemp === null) {
+                  return false; // Temperature doesn't matter for this activity
+                }
+                return celsius < minTemp || celsius > maxTemp;
+              });
+
+              console.log("Should not do", unavailableActivities);
+              setUnavailableActivities(unavailableActivities);
+            }
+          })
+          .catch((error) => {
+            console.error('Error fetching activities data:', error);
+          });
       })
       .catch((error) => {
         console.error('Error fetching weather data:', error);
       });
   }, []);
+
   
+  // Change temp to Celsius
+  const temperature = weatherInfo?.temperature;
+  const metric = temperature?.metric;
+
+  const getTemperatureInCelsius = (temp) => {
+    if (metric === 'FAHRENHEIT') {
+      return Math.round(((temp - 32) * 5) / 9);
+    }
+    return temp;
+  };
+
+  // Get corresponding weather description
+  const getWeatherDescription = (temp) => {
+    const celsius = getTemperatureInCelsius(temp);
+    let title = '';
+    let description = '';
+
+    if (weatherInfo) {
+      const weatherDescriptions = weatherInfo.weatherInfo;
+
+      for (const weatherDesc of weatherDescriptions) {
+        const { minTemp, maxTemp } = weatherDesc;
+
+        if (
+          (minTemp === null || celsius >= minTemp) &&
+          (maxTemp === null || celsius <= maxTemp)
+        ) {
+          title = weatherDesc.title.replace('{{ CELCIUS }}', celsius);
+          description = weatherDesc.description;
+          break;
+        }
+      }
+    }
+
+    return { title, description };
+  };
+
+  const { title, description } = weatherInfo ? getWeatherDescription(temperature.temp) : {};
 
   return (
     <main className={styles.main}>
@@ -69,10 +149,10 @@ export default function Home() {
           <div className={styles.weatherInfo}>
             {weatherInfo ? (
               <>
-                <h2>{weatherInfo.temperature.temp}&#8451;</h2>
+                <h2>{getTemperatureInCelsius(temperature.temp)}&deg;</h2>
                 <div className={styles.weatherDesc}>
-                  <p>{weatherInfo.weatherInfo[0].title}</p>
-                  <p>{weatherInfo.weatherInfo[0].description}</p>
+                  <p>{title}</p>
+                  <p>{description}</p>
                 </div>
               </>
             ) : (
@@ -84,74 +164,46 @@ export default function Home() {
             <h2>
               Some things you could do:
             </h2>
-            <div className={styles.activityInfo}>
-              <div className={styles.wrapper}>
-                <Image
-                  src="/pic.svg"
-                  alt="activity img"
-                  className={styles.activityImg}
-                  width={109}
-                  height={109}
-                  priority
-                />
-              </div>
-              <div className={styles.activityDesc}>
-                <p>Swimming</p>
-                <p>Very freezing, unusual even for the Netherlands. Stay warm indoors!.</p>
-              </div>
-            </div>
-            <div className={styles.activityInfo}>
-              <div className={styles.wrapper}>
-                <Image
-                  src="/pic.svg"
-                  alt="activity img"
-                  className={styles.activityImg}
-                  width={109}
-                  height={109}
-                  priority
-                />
-              </div>
-              <div className={styles.activityDesc}>
-                <p>Swimming</p>
-                <p>Very freezing, unusual even for the Netherlands. Stay warm indoors!.</p>
-              </div>
-            </div>
+            {filteredActivities.map((activity, index) => (
+              <Link href={activity.url} key={index} className={styles.activityInfo}>
+                <div className={styles.wrapper}>
+                  <Image
+                    src="/pic.svg"
+                    alt="activity img"
+                    className={styles.activityImg}
+                    width={109}
+                    height={109}
+                    priority
+                  />
+                </div>
+                <div className={styles.activityDesc}>
+                  <p>{activity.title}</p>
+                  <p>{activity.description}</p>
+                </div>
+              </Link>
+            ))}
 
             <h2>
               Some things you should not do:
             </h2>
-            <div className={styles.activityInfo}>
-              <div className={styles.wrapper}>
-                <Image
-                  src="/pic.svg"
-                  alt="activity img"
-                  className={styles.activityImg}
-                  width={109}
-                  height={109}
-                  priority
-                />
-              </div>
-              <div className={styles.activityDesc}>
-                <p>Swimming</p>
-                <p>Very freezing, unusual even for the Netherlands. Stay warm indoors!.</p>
-              </div>
-            </div>
-            <div className={styles.activityInfo}>
-              <div className={styles.wrapper}>
-                <Image
-                  src="/pic.svg"
-                  alt="activity img"
-                  className={styles.activityImg}
-                  width={109}
-                  height={109}
-                  priority
-                />
-              </div>
-              <div className={styles.activityDesc}>
-                <p>Swimming</p>
-                <p>Very freezing, unusual even for the Netherlands. Stay warm indoors!.</p>
-              </div>
-            </div>
+            {unavailableActivities.map((activity, index) => (
+              <Link href={activity.url} key={index} className={styles.activityInfo}>
+                <div className={styles.wrapper}>
+                  <Image
+                    src="/pic.svg"
+                    alt="activity img"
+                    className={styles.activityImg}
+                    width={109}
+                    height={109}
+                    priority
+                  />
+                </div>
+                <div className={styles.activityDesc}>
+                  <p>{activity.title}</p>
+                  <p>{activity.description}</p>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </div>

@@ -6,11 +6,6 @@
   max-width: var(--max-width);
 }
 
-.code {
-  font-weight: 700;
-  font-family: var(--font-mono);
-}
-
 .grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(50%, auto));
@@ -112,6 +107,11 @@
   margin-top: 3rem;
 }
 
+.activity a {
+  text-decoration: none;
+  color: rgb(var(--foreground-rgb));
+}
+
 .activity h2 {
   font-size: 24px;
   font-weight: 500;
@@ -125,7 +125,7 @@
 }
 
 .activityInfo .wrapper img{
-  width: 109px;
+  width: 149px;
   height: 100%; 
   object-fit: cover; 
 }

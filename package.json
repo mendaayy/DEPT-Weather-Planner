@@ -3,11 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node getWeather.cjs & node getActivities.cjs & next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "prestart": "node getWeather.cjs & node getActivities.cjs"
+    "lint": "next lint"
   },
   "dependencies": {
     "cors": "^2.8.5",

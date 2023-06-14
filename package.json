@@ -7,9 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "getWeather": "node getWeather.cjs",
-    "getActivities": "node getActivities.cjs",
-    "prestart": "npm run getWeather & npm run getActivities"
+    "prestart": "node getWeather.cjs & node getActivities.cjs"
   },
   "dependencies": {
     "cors": "^2.8.5",

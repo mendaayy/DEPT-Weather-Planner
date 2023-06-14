@@ -168,7 +168,7 @@ export default function Home() {
               <Link href={activity.url} key={index} className={styles.activityInfo}>
                 <div className={styles.wrapper}>
                   <Image
-                    src="/pic.svg"
+                    src={activity.imageUrl}
                     alt="activity img"
                     className={styles.activityImg}
                     width={109}
@@ -190,7 +190,7 @@ export default function Home() {
               <Link href={activity.url} key={index} className={styles.activityInfo}>
                 <div className={styles.wrapper}>
                   <Image
-                    src="/pic.svg"
+                    src={activity.imageUrl}
                     alt="activity img"
                     className={styles.activityImg}
                     width={109}

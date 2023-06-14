@@ -17,13 +17,13 @@ export default function Home() {
   
   // Fetch current weather data and activities
   useEffect(() => {
-    fetch('http://localhost:8005')
+    fetch('http://localhost:8009')
       .then((response) => response.json())
       .then((weatherData) => {
         setWeatherInfo(weatherData);
 
         // Fetch activities data
-        fetch('http://localhost:8010')
+        fetch('http://localhost:8018')
           .then((response) => response.json())
           .then((activitiesData) => {
             console.log(activitiesData);

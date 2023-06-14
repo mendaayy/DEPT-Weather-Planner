@@ -11,24 +11,27 @@ export default function Home() {
   const [filteredActivities, setFilteredActivities] = useState([]);
   const [unavailableActivities, setUnavailableActivities] = useState([]);
 
+  // Toggle DEPT info btn
   const handleToggle = () => {
     setShowMore(!showMore);
   };
   
   // Fetch current weather data and activities
   useEffect(() => {
-    fetch('http://localhost:8898')
+    // CORS
+    fetch('http://localhost:1001')
       .then((response) => response.json())
       .then((weatherData) => {
         console.log(weatherData)
         setWeatherInfo(weatherData);
 
         // Fetch activities data
-        fetch('http://localhost:8899')
+        fetch('http://localhost:1000')
           .then((response) => response.json())
           .then((activitiesData) => {
             console.log(activitiesData);
 
+            // if weather fetches
             if (weatherData && weatherData.temperature) {
               const { temp } = weatherData.temperature;
               const celsius = getTemperatureInCelsius(temp);
@@ -45,6 +48,7 @@ export default function Home() {
               console.log("Could do", filteredActivities);
               setFilteredActivities(filteredActivities);
 
+              // Filter out activities based on temperature
               const unavailableActivities = activitiesData.activities.filter((activity) => {
                 const { minTemp, maxTemp } = activity;
                 if (minTemp === null && maxTemp === null) {
@@ -84,12 +88,14 @@ export default function Home() {
     let title = '';
     let description = '';
 
+    // If weather fetches
     if (weatherInfo) {
       const weatherDescriptions = weatherInfo.weatherInfo;
 
       for (const weatherDesc of weatherDescriptions) {
         const { minTemp, maxTemp } = weatherDesc;
 
+        // Corresponding description based on weather
         if (
           (minTemp === null || celsius >= minTemp) &&
           (maxTemp === null || celsius <= maxTemp)
@@ -100,7 +106,6 @@ export default function Home() {
         }
       }
     }
-
     return { title, description };
   };
 
@@ -111,6 +116,7 @@ export default function Home() {
       <div className={styles.grid}>
         <div className={styles.column}>
           <div className={styles.row}>
+            {/* Dept information */}
             <div className={styles.deptInfo}>
               <Image
                   src="/dept.svg"
@@ -138,6 +144,7 @@ export default function Home() {
                     <br></br>
                   </>
                 ) : null}
+                {/* Toggle read */}
                 <button onClick={handleToggle}>
                   {showMore ? 'Read Less' : 'Read More'}
                 </button>
@@ -147,6 +154,7 @@ export default function Home() {
         </div>
 
         <div className={styles.column}>
+          {/* Weather rectangle */}
           <div className={styles.weatherInfo}>
             {weatherInfo ? (
               <>
@@ -161,6 +169,7 @@ export default function Home() {
             )}
           </div>
 
+          {/* Do's activities */}
           <div className={styles.activity}>
             <h2>
               Some things you could do:
@@ -184,6 +193,7 @@ export default function Home() {
               </Link>
             ))}
 
+            {/* Do-not activities */}
             <h2>
               Some things you should not do:
             </h2>

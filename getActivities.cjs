@@ -3,12 +3,12 @@ const fetch = require('isomorphic-fetch');
 const cors = require('cors');
 
 const app = express();
-const port = 8899;
+const port = 1000;
 
 // Enable CORS for all routes
 app.use(cors());
 
-// endpoint
+// Endpoint
 app.get('/', async (req, res) => { 
   try {
     const apiResponse = await fetch('https://dtnl-frontend-internship-case.vercel.app/api/get-activities');

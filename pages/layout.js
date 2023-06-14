@@ -6,11 +6,6 @@ const lato = Lato({
   subsets: ['latin'],
 })
 
-export const metadata = {
-  title: 'Dept Weather Planner',
-  description: 'Internship Case',
-}
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en">

@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "node getWeather.cjs && node getActivities.cjs",
+    "start": "node getWeather.cjs && node getActivities.cjs && next start",
     "lint": "next lint"
   },
   "dependencies": {

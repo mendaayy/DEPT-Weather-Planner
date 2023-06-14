@@ -1,0 +1,17 @@
+{
+    "builds": [
+      {
+        "src": "getWeather.cjs",
+        "use": "@vercel/node"
+      },
+      {
+        "src": "getActivities.cjs",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      { "handle": "filesystem" },
+      { "src": "/(.*)", "dest": "/pages/index.js" }
+    ]
+  }
+  

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "node getWeather.cjs & node getActivities.cjs & next dev",
-    "build": "next build",
+    "build": "node getWeather.cjs && node getActivities.cjs && next build",
     "start": "next start",
     "lint": "next lint"
   },

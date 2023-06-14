@@ -20,6 +20,7 @@ export default function Home() {
     fetch('http://localhost:8009')
       .then((response) => response.json())
       .then((weatherData) => {
+        console.log(weatherData)
         setWeatherInfo(weatherData);
 
         // Fetch activities data

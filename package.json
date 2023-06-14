@@ -6,11 +6,9 @@
     "node": "18.x"
   },
   "scripts": {
-    "dev": "next dev & getWeather & getActivities",
+    "dev": "next dev & node getWeather.cjs & node getActivities.cjs",
     "build": "next build",
-    "getWeather": "node getWeather.cjs",
-    "getActivities": "node getActivities.cjs",
-    "start": "getWeather && getActivities",
+    "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {

@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && npm-run-all --parallel getWeather getActivities",
+    "build": "next build",
     "getWeather": "node getWeather.cjs",
     "getActivities": "node getActivities.cjs",
-    "start": "next start",
+    "start": "getWeather && getActivities",
     "lint": "next lint"
   },
   "dependencies": {
